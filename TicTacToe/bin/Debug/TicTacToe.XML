@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TicTacToe</name>
+    </assembly>
+    <members>
+        <member name="T:TicTacToe.BoardForm">
+            <summary>
+            Clase donde sucede la partida, tablero.
+            </summary>
+        </member>
+        <member name="F:TicTacToe.BoardForm.Game1">
+            <summary>
+            Objeto de clase Game, que ejecuta la lógica del juego
+            </summary>
+        </member>
+        <member name="F:TicTacToe.BoardForm.TableB">
+            <summary>
+            Tabla de botones
+            </summary>
+        </member>
+        <member name="M:TicTacToe.BoardForm.#ctor">
+            <summary>
+            Constructor de la clase BoardForm
+            </summary>
+        </member>
+        <member name="M:TicTacToe.BoardForm.button_ClickX(System.Object,System.EventArgs)">
+            <summary>
+            Dibuja la ficha del jugador en el botón que ha seleccionado. A su vez llama a la función de dibujar la ficha de la máquina para que el movimiento sea automático.
+            </summary>
+        </member>
+        <member name="M:TicTacToe.BoardForm.button_ClickO(System.Int32,System.Int32)">
+            <summary>
+            Método para dibujar la ficha de la máquina.
+            </summary>
+            <param name="x">Coordenada donde se va a dibujar la ficha</param>
+            <param name="y">Coordenada donde se va a dibujar la ficha</param>
+        </member>
+        <member name="M:TicTacToe.BoardForm.Form1_Load(System.Object,System.EventArgs)">
+            <summary>
+            Carga del formulario con el tablero. Pregunta por el primer movimiento y lo ejecuta.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TicTacToe.BoardForm.CheckEnd">
+            <summary>
+            Método agrupador de las comprobaciones de finalización del juego y mensajes.
+            </summary>
+        </member>
+        <member name="F:TicTacToe.BoardForm.components">
+            <summary>
+            Variable del diseñador necesaria.
+            </summary>
+        </member>
+        <member name="M:TicTacToe.BoardForm.Dispose(System.Boolean)">
+            <summary>
+            Limpiar los recursos que se estén usando.
+            </summary>
+            <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
+        </member>
+        <member name="M:TicTacToe.BoardForm.InitializeComponent">
+            <summary>
+            Método necesario para admitir el Diseñador. No se puede modificar
+            el contenido de este método con el editor de código.
+            </summary>
+        </member>
+        <member name="T:TicTacToe.Game">
+            <summary>
+            Clase con la lógica del juego
+            </summary>
+        </member>
+        <member name="T:TicTacToe.Game.Bridge">
+            <summary>
+            Tipo de dato que hará de comunicador entre la clase Game y la clase del formulario BoardForm
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game.Bridge.X">
+            <summary>
+            Valor de X en la tabla para asignar ficha
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game.Bridge.Y">
+            <summary>
+            Valor de Y en la tabla para asignar ficha
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game.Bridge.WinPlayer">
+            <summary>
+            Variable contenedor de victoria de jugador. True si el jugador ha ganado
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game.Bridge.WinMachine">
+            <summary>
+            Variable contenedor de victoria de la máquina. True si la máquina ha ganado
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game.ObjectBridge">
+            <summary>
+            Objeto de la clase Bridge que hace de conexión entre la clase formulario BoardForm, y la clase Game
+            </summary>
+        </member>
+        <member name="F:TicTacToe.Game._tableBoard">
+            <summary>
+            Tabla con las posiciones del tablero, y jugadas temporales.
+            </summary>
+        </member>
+        <member name="M:TicTacToe.Game.#ctor">
+            <summary>
+            Constructor de la clase Game
+            </summary>
+        </member>
+        <member name="M:TicTacToe.Game.InitializeTable">
+            <summary>
+            Inicializamos la tabla de tablero de tipo caractéres de juego, con guiones
+            </summary>
+        </member>
+        <member name="M:TicTacToe.Game.WriteTable(System.String,System.Boolean)">
+            <summary>
+            Escribe en la tabla de char, la llamamos cuando mueva el jugador o la máquina
+            </summary>
+            <param name="pos">Posición extraída de propiedad Name del botón</param>
+            <param name="token">Falso si es un O, y verdadero si es un X</param>
+        </member>
+        <member name="M:TicTacToe.Game.CheckWin">
+            <summary>
+            Comprueba si alguno de los jugadores gana.
+            </summary>
+            <returns>0 si gana máquina, 1 si gana jugador, -1 si aún no hay jugada ganadora</returns>
+        </member>
+        <member name="M:TicTacToe.Game.FullBoard">
+            <summary>
+            Método que nos dice si el tablero está lleno, llamando este método junto a CheckWin, obtendremos por descarte la opción de empate
+            </summary>
+            <returns>Falso si el tablero tiene huecos vacíos, true si el tablero está lleno</returns>
+        </member>
+        <member name="M:TicTacToe.Game.EndMatch">
+            <summary>
+            Método conjuno de finalización para la comprobación ficticia del minimax
+            </summary>
+            <returns>Devuelve true si el tablero está lleno o si alguno de los jugadores ha ganado</returns>
+        </member>
+        <member name="M:TicTacToe.Game.MoveMachineBridge">
+            <summary>
+            Cerebro que decide el movimiento de máquina.
+             Lo que hacemos es recorrer todas las celdas del tablero, y si no están marcadas, las marcamos, y a continuación hacemos la primera llamada recursiva al método MIN del algoritmo minimax. Esta función nos devolverá el valor del nodo hoja mas alto que ha encontrado el algoritmo minimax al ejecutarse partiendo de que la CPU ha marcado esa casilla concreta. Si ese resultado es mejor que el que llevamos almacenado hasta el momento, almacenamos la casilla que habíamos marcado. Antes de probar con otra casilla, hay que desmarcarla porque estamos modificando las casillas del tablero del juego para generar el árbol de soluciones y queremos dejarlo en su estado original.
+            </summary>
+            <returns>Retorna el objeto de clase Bridge con la jugada lista para que la máquina la ejecute</returns>
+        </member>
+        <member name="M:TicTacToe.Game.Max">
+            <summary>
+            El método MAX es idéntico, salvo que esta vez el último jugador que marcó alguna casilla fue la CPU, asi que comprobamos si ha ganado o empatado la partida. Después recorremos como siempre las casillas del tablero buscando las vacías. Y que esta vez estamos simulando ser la CPU, por lo que buscaremos el nodo hoja con el valor más alto (1, que indica victoria).
+            </summary>
+            <returns>Devolverá el valor máximo de todas las llamadas</returns>
+        </member>
+        <member name="M:TicTacToe.Game.Min">
+            <summary>
+            Este algoritmo es el encargado de simular el turno del jugador humano, y lo que nos interesa es minimizar su resultado, es decir, que no gane o por lo menos que empate la partida.
+            Sabemos que cuando se llame este algoritmo, el último jugador en marcar el tablero fue la CPU, asi que comprobamos si ha ganado o empatado el juego. En esos casos, estaríamos en un nodo hoja, y devolvemos alguno de los valores 1 ó 0 que ya he descrito. Si no es nodo hoja, entonces con un for recorremos las casillas y marcamos la primera que veamos libre, simulando ser el jugador humano, y llamando a continuación al método MAX. Llamamos a MAX porque en el siguiente turno le tocará jugar a la CPU, y nos interesa maximizar su resultado.
+            ¿Y por qué nos quedamos con el valor mínimo? Pues porque estamos simulando el turno del jugador humano, y suponemos que este jugador moverá para GANAR la partida, que es un nodo hoja con el valor -1.
+            Así pues, notar que el algoritmo minimax supondrá que el rival(en nuestro caso, el jugador humano) siempre hará el mejor movimiento posible, o dicho de otro modo, el movimiento que más nos perjudique(al jugador CPU).
+            Notar que el último paso del bucle for es desmarcar la casilla marcada en esa vuelta, para dejar el array de casillas tal y como estaba.
+            </summary>
+            <returns>Davolverá el valor mínimo</returns>
+        </member>
+        <member name="M:TicTacToe.Program.Main">
+            <summary>
+            Punto de entrada principal para la aplicación.
+            </summary>
+        </member>
+        <member name="T:TicTacToe.StartForm">
+            <summary>
+            Formulario inicial que arranca el siguiente formulario.
+            </summary>
+        </member>
+        <member name="M:TicTacToe.StartForm.#ctor">
+            <summary>
+            Constructor de la clase, inicializa componentes del formulario
+            </summary>
+        </member>
+        <member name="M:TicTacToe.StartForm.button1_Click(System.Object,System.EventArgs)">
+            <summary>
+            Clic en el botón de iniciar, arranca el siguiente formulario y lo pone en pantalla y operativo.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:TicTacToe.StartForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:TicTacToe.StartForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:TicTacToe.StartForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:TicTacToe.Properties.Resources">
+            <summary>
+              Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.ResourceManager">
+            <summary>
+              Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.Culture">
+            <summary>
+              Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+              búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.info_1459077_960_720">
+            <summary>
+              Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.o">
+            <summary>
+              Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.tttmarqlrg">
+            <summary>
+              Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.tttmarqlrg1">
+            <summary>
+              Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:TicTacToe.Properties.Resources.x2">
+            <summary>
+              Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+            </summary>
+        </member>
+    </members>
+</doc>
